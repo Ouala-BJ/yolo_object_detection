@@ -1,14 +1,16 @@
-# Utilise une image de base avec Python
 FROM python:3.10-slim
 
-# Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers du projet dans le conteneur
+# Dépendances système pour OpenCV
+RUN apt-get update && apt-get install -y libgl1 libglib2.0-0
+
+# Installer les dépendances Python
+RUN pip install --no-cache-dir ultralytics gradio
+
+# Copier le code
 COPY . .
 
-# Installer les dépendances
-RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 7860
 
-# Lancer l'application
 CMD ["python", "app.py"]
